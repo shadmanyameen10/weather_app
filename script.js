@@ -42,67 +42,89 @@ const displayHourlyForecast = (hourlyData) => {
   }).join('');
 };
 
+const showErrorModal = () => {
+  const modal = document.getElementById("error-modal");
+  modal.style.display = "flex";  // Show the modal
+}
+
+const closeModal = () => {
+  const modal = document.getElementById("error-modal");
+  modal.style.display = "none";  // Hide the modal
+}
+
+document.getElementById("close-modal").addEventListener("click", closeModal);
+
+document.getElementById("restart-btn").addEventListener("click", () => {
+  closeModal();
+  // Optionally, reset search input or perform any other logic to restart
+  searchInput.value = '';
+});
+
 // Fetch and display weather details
 const getWeatherDetails = async (API_URL) => {
   window.innerWidth <= 768 && searchInput.blur();
   document.body.classList.remove("show-no-results");
 
   try {
-    // Fetch weather data from the API and parse the response as JSON
     const response = await fetch(API_URL);
     const data = await response.json();
 
-    // Extract current weather details
-    const temperature = Math.floor(data.current.temp_c);
+    if (data.error) {
+      showErrorModal();  // Show modal if there's an error
+      return;
+    }
+
+    // Get current temperature in Celsius and store it globally
+    currentTempCelsius = data.current.temp_c;
+    currentTempFahrenheit = (currentTempCelsius * 9) / 5 + 32; // Store the equivalent Fahrenheit value
+
+
+    const temperature = Math.floor(currentTempCelsius);
     const description = data.current.condition.text;
     const weatherIcon = Object.keys(weatherCodes).find(icon => weatherCodes[icon].includes(data.current.condition.code));
 
-    // Update the current weather display
+    // Update weather display
     currentWeatherDiv.querySelector(".weather-icon").src = `icons/${weatherIcon}.svg`;
     currentWeatherDiv.querySelector(".temperature").innerHTML = `${temperature}<span>°C</span>`;
     currentWeatherDiv.querySelector(".description").innerText = description;
 
-    // Combine hourly data from today and tomorrow
     const combinedHourlyData = [...data.forecast?.forecastday[0]?.hour, ...data.forecast?.forecastday[1]?.hour];
-
     searchInput.value = data.location.name;
     displayHourlyForecast(combinedHourlyData);
   } catch (error) {
     document.body.classList.add("show-no-results");
+    showErrorModal();  // Show modal if there's a network error
   }
-}
+};
 
 // Set up the weather request for a specific city
 const setupWeatherRequest = (cityName) => {
   const API_URL = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${cityName}&days=2`;
   getWeatherDetails(API_URL);
-}
+};
 
-let isCelsius = true; // Tracks the current unit
+let currentTempCelsius = null;  // Store the current temperature in Celsius globally
+let currentTempFahrenheit = null;  // Store the current temperature in Fahrenheit
+let isCelsius = true;  // Track the current unit
 
 // Function to convert temperature
 function convertTemperature() {
-  const tempElement = document.querySelector(".temperature"); // Get the temperature element
-  const currentTemp = parseFloat(tempElement.textContent); // Read the current temperature
-  
+  const tempElement = document.querySelector(".temperature");
+
   if (isCelsius) {
-    // Convert to Fahrenheit
-    const fahrenheit = (currentTemp * 9) / 5 + 32;
-    tempElement.innerHTML = `${fahrenheit.toFixed(1)}<span>°F</span>`; // Update to Fahrenheit
-    document.querySelector(".convert-button").textContent = "Convert to °C";
+    // Convert Celsius to Fahrenheit and store it
+    currentTempFahrenheit = (currentTempCelsius * 9) / 5 + 32;
+    tempElement.innerHTML = `${currentTempFahrenheit.toFixed(1)}<span>°F</span>`;  // Update displayed temp
+    document.querySelector(".convert-button").textContent = "Convert to °C";  // Update button text
   } else {
-    // Convert to Celsius
-    const celsius = ((currentTemp - 32) * 5) / 9;
-    tempElement.innerHTML = `${celsius.toFixed(1)}<span>°C</span>`; // Update to Celsius
-    document.querySelector(".convert-button").textContent = "Convert to °F";
+    // Convert Fahrenheit to Celsius and store it
+    currentTempCelsius = ((currentTempFahrenheit - 32) * 5) / 9;
+    tempElement.innerHTML = `${currentTempCelsius.toFixed(1)}<span>°C</span>`;  // Update displayed temp
+    document.querySelector(".convert-button").textContent = "Convert to °F";  // Update button text
   }
-  
-  isCelsius = !isCelsius; // Toggle the state
+
+  isCelsius = !isCelsius;  // Toggle the state
 }
-
-
-
-
 
 
 // Handle user input in the search box
