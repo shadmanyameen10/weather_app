@@ -22,13 +22,6 @@
       </button>
     </div>
 
-    <!-- No results message -->
-    <div class="no-results">
-      <img src="icons/no-result.svg" alt="No results found" class="icon">
-      <h3 class="title">Something went wrong!</h3>
-      <p class="message">We're unable to retrieve the weather details. Enure you've entered a valid city or try again later.</p>
-    </div>
-
     <!-- Container for displaying weather data -->
     <section class="current-weather">
       <img src="icon.png" alt="Weather icon" class="weather-icon">
@@ -38,6 +31,16 @@
       <div class="description">Sunny</div>
       <button class="convert-button" onclick="convertTemperature()">Convert to °F</button>
     </section>
+
+    <div id="error-modal" class="error-modal">
+      <div class="error-modal-content">
+        <span id="close-modal" class="close-btn">&times;</span>
+        <h2>Error</h2>
+        <p>Location not found. Please try again.</p>
+        <button id="restart-btn">Restart</button>
+      </div>
+    </div>
+    
     
 
       <!-- Hourly weather forecast list -->
