@@ -30,12 +30,15 @@
     </div>
 
     <!-- Container for displaying weather data -->
-    <div class="weather-section">
-      <div class="current-weather">
-        <img src="icons/no-result.svg" class="weather-icon">
-        <h2 class="temperature">00<span>°C</span></h2>
-        <h5 class="description">Weather description</h5>
+    <section class="current-weather">
+      <img src="icon.png" alt="Weather icon" class="weather-icon">
+      <div class="temperature" id="temperature-display">
+        22<span>°C</span>
       </div>
+      <div class="description">Sunny</div>
+      <button class="convert-button" onclick="convertTemperature()">Convert to °F</button>
+    </section>
+    
 
       <!-- Hourly weather forecast list -->
       <div class="hourly-weather">
@@ -43,6 +46,8 @@
       </div>
     </div>
   </div>
+
+  
 
   <script src="script.js"></script>
 </body>

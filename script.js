@@ -78,6 +78,33 @@ const setupWeatherRequest = (cityName) => {
   getWeatherDetails(API_URL);
 }
 
+let isCelsius = true; // Tracks the current unit
+
+// Function to convert temperature
+function convertTemperature() {
+  const tempElement = document.querySelector(".temperature"); // Get the temperature element
+  const currentTemp = parseFloat(tempElement.textContent); // Read the current temperature
+  
+  if (isCelsius) {
+    // Convert to Fahrenheit
+    const fahrenheit = (currentTemp * 9) / 5 + 32;
+    tempElement.innerHTML = `${fahrenheit.toFixed(1)}<span>°F</span>`; // Update to Fahrenheit
+    document.querySelector(".convert-button").textContent = "Convert to °C";
+  } else {
+    // Convert to Celsius
+    const celsius = ((currentTemp - 32) * 5) / 9;
+    tempElement.innerHTML = `${celsius.toFixed(1)}<span>°C</span>`; // Update to Celsius
+    document.querySelector(".convert-button").textContent = "Convert to °F";
+  }
+  
+  isCelsius = !isCelsius; // Toggle the state
+}
+
+
+
+
+
+
 // Handle user input in the search box
 searchInput.addEventListener("keyup", (e) => {
   const cityName = searchInput.value.trim();
