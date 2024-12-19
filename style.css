@@ -8,21 +8,32 @@
   font-family: "Montserrat", sans-serif;
 }
 
-convert-button {
+.convert-button {
   margin-top: 10px;
-  padding: 8px 16px;
+  padding: 10px 20px; /* Slightly larger padding for a better feel */
   font-size: 1rem;
   color: #fff;
-  background-color: #ff5722; /* Distinct contrasting color */
+  background: linear-gradient(135deg, #5f41e4, #ff5722); /* Gradient background to align with app theme */
   border: none;
-  border-radius: 5px;
+  border-radius: 50px; /* Rounded corners */
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s ease, transform 0.2s ease; /* Added a smooth transition for background and scaling */
 }
 
 .convert-button:hover {
-  background-color: #e64a19; /* Slightly darker shade for hover effect */
+  background: linear-gradient(135deg, #ff5722, #5f41e4); /* Reversed gradient for hover effect */
+  transform: scale(1.05); /* Slightly enlarge the button on hover for added interactivity */
 }
+
+.convert-button:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); /* Added shadow for focus state */
+}
+
+.convert-button:active {
+  transform: scale(0.98); /* Slight shrink effect on click */
+}
+
 
 
 body {
