@@ -34,26 +34,76 @@
   transform: scale(0.98); /* Slight shrink effect on click */
 }
 
+/* Modal background */
 .modal {
   display: flex;
+  align-items: center;
+  justify-content: center;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
   z-index: 1000;
 }
 
+/* Modal content box */
 .modal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
+  background: linear-gradient(to bottom, #1e90ff, #87ceeb); /* Weather-themed gradient */
+  color: white;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+  width: 90%;
+  max-width: 400px;
+  animation: fadeIn 0.5s ease-in-out; /* Entrance animation */
 }
+
+/* Title and paragraph styling */
+.modal-content h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-family: 'Arial', sans-serif;
+}
+
+.modal-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Get Started button */
+.get-started-btn {
+  background-color: #ffcc00; /* Contrasting button color */
+  color: #333;
+  border: none;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+}
+
+/* Button hover effect */
+.get-started-btn:hover {
+  transform: scale(1.1); /* Slightly enlarge the button */
+  box-shadow: 0 4px 10px rgba(255, 204, 0, 0.8); /* Glow effect */
+}
+
+/* Fade-in animation for modal */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 
 
