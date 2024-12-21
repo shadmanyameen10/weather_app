@@ -5,6 +5,21 @@ const hourlyWeather = document.querySelector(".hourly-weather .weather-list");
 
 const API_KEY = "f1dd6833dcff4da7bbb72607241812"; // API key
 
+document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("welcomeModal");
+  const closeModal = document.getElementById("closeModal");
+
+  // Show the modal when the app loads
+  modal.style.display = "flex";
+
+  // Close the modal when the button is clicked
+  closeModal.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+});
+
+
+
 // Weather codes for mapping to custom icons
 const weatherCodes = {
   clear: [1000],
